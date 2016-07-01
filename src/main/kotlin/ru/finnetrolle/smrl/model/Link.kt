@@ -1,9 +1,6 @@
 package ru.finnetrolle.smrl.model
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 /**
  * This class is developed by maxsyachin on 17.05.16
@@ -15,5 +12,8 @@ import javax.persistence.Table
 @Table(name = "links")
 data class Link(
         var text: String = "",
-        @Id @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO) var id: Long = 0
+        @Id
+        @GeneratedValue(strategy = javax.persistence.GenerationType.SEQUENCE, generator = "links_sequence")
+        @SequenceGenerator(name = "links_sequence", sequenceName = "links_seq")
+        var id: Long = 0
 )
