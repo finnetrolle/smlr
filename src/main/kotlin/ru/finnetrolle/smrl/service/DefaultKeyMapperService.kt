@@ -2,8 +2,9 @@ package ru.finnetrolle.smrl.service
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.atomic.AtomicLong
+import org.springframework.transaction.annotation.Transactional
+import ru.finnetrolle.smrl.model.Link
+import ru.finnetrolle.smrl.model.repositories.LinkRepository
 
 /**
  * This class is developed by maxsyachin on 25.04.16
@@ -16,24 +17,19 @@ class DefaultKeyMapperService: KeyMapperService {
     @Autowired
     lateinit var converter: KeyConverterService
 
-    val sequence = AtomicLong(10000000L)
+    @Autowired
+    lateinit var repo: LinkRepository
 
-    override fun add(link: String): String {
-        val id = sequence.getAndIncrement()
-        val key = converter.idToKey(id)
-        map.put(id, link)
-        return key
-    }
-
-    private val map: MutableMap<Long, String> = ConcurrentHashMap()
+    @Transactional
+    override fun add(link: String) =
+            converter.idToKey(repo.save(Link(link)).id)
 
     override fun getLink(key: String): KeyMapperService.Get {
-        val id = converter.keyToId(key)
-        val result = map[id]
-        if (result == null) {
-            return KeyMapperService.Get.NotFound(key)
+        val result = repo.findOne(converter.keyToId(key))
+        return if (result.isPresent) {
+            KeyMapperService.Get.Link(result.get().text)
         } else {
-            return KeyMapperService.Get.Link(result)
+            KeyMapperService.Get.NotFound(key)
         }
     }
 }
