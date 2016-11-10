@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Your link is smlr now!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+</head>
+<body>
+<div class="text-center">
+    <div class="page-header">
+        <h1>Ваша ссылка уменьшена!</h1>
+    </div>
+    <p>Сперва она была такой - <a th:href="${link}" th:text="${link}"></a></p>
+    <p>А наш сервис превратил ее в такую - <a th:href="${keyed}" th:text="${keyed}"></a></p>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Скопируйте ссылку отсюда</span>
+        <input th:autofocus="${true}" type="text" class="form-control" readonly="readonly" aria-describedby="basic-addon1" th:value="${keyed}"/>
+    </div>
+</div>
+</body>
+</html>

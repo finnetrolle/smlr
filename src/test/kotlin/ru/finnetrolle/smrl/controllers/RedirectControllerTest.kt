@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
@@ -66,13 +67,18 @@ class RedirectControllerTest {
                 .andExpect(header().string(HEADER_NAME, HEADER_VALUE))
     }
 
-    private val BAD_PATH = "/olololo"
+    private val BAD_PATH = "olololo"
 
     private val NOT_FOUND: Int = 404
 
     @Test fun controllerMustReturn404IfBadKey() {
         mockMvc.perform(get("/$BAD_PATH"))
                 .andExpect(status().`is`(NOT_FOUND))
+    }
+
+    @Test fun homeWorksFine() {
+        mockMvc.perform(get("/"))
+            .andExpect(MockMvcResultMatchers.view().name("home"))
     }
 
 }
