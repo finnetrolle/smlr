@@ -8,12 +8,6 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import ru.finnetrolle.smrl.service.KeyMapperService
 
-/**
- * This class is developed by maxsyachin on 29.07.16
- * for smlr
- * under MIT license
- */
-
 @Controller
 
 class AddController {
