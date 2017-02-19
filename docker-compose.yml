@@ -1,0 +1,21 @@
+version: '2'
+services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=12345
+    restart: always
+
+  smlr:
+    image: finnetrolle/smlr:latest
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
+      - SMLR_PREFIX=http://smlr.ru/
+      - SERVER_PORT=80
+    links:
+      - db
+    ports:
+      - "80:80"
