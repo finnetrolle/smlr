@@ -1,23 +1,8 @@
-sudo: required
-
-services:
-  - docker
-
 language: java
 jdk: oraclejdk8
 
-env:
-  global:
-    - COMMIT=${TRAVIS_COMMIT::7}
-
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - docker login -u $D_USER -p $D_PASS
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master"]; then echo "latest'; else echo $TRAVIS_BRANCH; fi`
-  - export NAME=finnetrolle/smlr
-  - docker build -t $NAME:$COMMIT .
-  - docker tag $NAME:$COMMIT $NAME:$TAG
-  - docker push $NAME
 
 notifications:
   email:
