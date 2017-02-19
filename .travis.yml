@@ -12,7 +12,7 @@ env:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - docker login -e $D_EMAIL -u $D_USER -p $D_PASS
+  - docker login -u $D_USER -p $D_PASS
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master"]; then echo "latest'; else echo $TRAVIS_BRANCH; fi`
   - export NAME=finnetrolle/smlr
   - docker build -t $NAME:$COMMIT .
