@@ -1,0 +1,6 @@
+#!/bin/bash
+
+clear
+GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+export BRANCH=`if [ $GIT_BRANCH == "master" ]; then echo "latest"; else echo $GIT_BRANCH; fi`
+docker-compose up

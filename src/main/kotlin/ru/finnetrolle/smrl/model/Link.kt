@@ -1,5 +1,6 @@
 package ru.finnetrolle.smrl.model
 
+import java.util.*
 import javax.persistence.*
 
 /**
@@ -15,5 +16,6 @@ data class Link(
         @Id
         @GeneratedValue(strategy = javax.persistence.GenerationType.SEQUENCE, generator = "links_sequence")
         @SequenceGenerator(name = "links_sequence", sequenceName = "links_seq")
-        var id: Long = 0
+        var id: Long = 0,
+        var created: Date = Date()
 )
