@@ -1,6 +1,7 @@
 package ru.finnetrolle.smrl.controllers
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.nhaarman.mockito_kotlin.whenever
 import org.hamcrest.Matchers
 import org.junit.Before
 import org.junit.Test
@@ -23,7 +24,6 @@ import org.springframework.web.context.WebApplicationContext
 import ru.finnetrolle.smrl.SmlrApplication
 import ru.finnetrolle.smrl.conrtollers.AddController
 import ru.finnetrolle.smrl.service.KeyMapperService
-import ru.finnetrolle.smrl.whenever
 
 /**
  * This class is developed by maxsyachin on 29.07.16

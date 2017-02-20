@@ -9,6 +9,7 @@ import ru.finnetrolle.smrl.model.AbstractRepositoryTest
 import org.hamcrest.Matchers.*
 import org.hamcrest.MatcherAssert.assertThat;
 import ru.finnetrolle.smrl.model.Link
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -29,7 +30,8 @@ open class LinkRepositoryTest : AbstractRepositoryTest() {
         val got: Optional<Link> = repository.findOne(LINK_1_ID)
         assertThat(got.isPresent, equalTo(true))
         val link = got.get()
-        assertThat(link, equalTo(Link(LINK_1_TEXT, LINK_1_ID)))
+        assertThat(link.id, equalTo(LINK_1_ID))
+        assertThat(link.text, equalTo(LINK_1_TEXT))
     }
 
     @Test
