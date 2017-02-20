@@ -1,21 +1,25 @@
-version: '2'
+version: '3'
 services:
   db:
     image: postgres:latest
+    container_name: smlr_database
     environment:
       - POSTGRES_PASSWORD=12345
     restart: always
 
   smlr:
-    image: finnetrolle/smlr:latest
+    image: finnetrolle/smlr:$BRANCH
+    container_name: smlr_application
     restart: always
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=12345
-      - SMLR_PREFIX=http://smlr.ru/
+      - SMLR_PREFIX=http://localhost/
       - SERVER_PORT=80
     links:
       - db
     ports:
       - "80:80"
+    depends_on:
+      - db

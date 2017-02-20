@@ -8,5 +8,9 @@
     <changeSet id="1" author="finnetrolle">
         <sqlFile path="sql/001_init.sql" relativeToChangelogFile="true" stripComments="true"/>
     </changeSet>
+    <changeSet id="2" author="finnetrolle">
+        <sqlFile path="sql/002_add_timestamps.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
 
 </databaseChangeLog>

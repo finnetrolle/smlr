@@ -21,8 +21,12 @@ class DefaultKeyMapperService: KeyMapperService {
     lateinit var repo: LinkRepository
 
     @Transactional
-    override fun add(link: String) =
-            converter.idToKey(repo.save(Link(link)).id)
+    override fun add(link: String): String {
+        val entity = repo.save(Link(link))
+        return converter.idToKey(entity.id)
+//        converter.idToKey(repo.save(Link(link)).id)
+    }
+
 
     override fun getLink(key: String): KeyMapperService.Get {
         val result = repo.findOne(converter.keyToId(key))

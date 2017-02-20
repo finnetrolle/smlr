@@ -1,5 +1,9 @@
 package ru.finnetrolle.smrl.service
 
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.argThat
+import com.nhaarman.mockito_kotlin.capture
+import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Assert.*
 import org.junit.Before
 
@@ -10,7 +14,6 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import ru.finnetrolle.smrl.model.Link
 import ru.finnetrolle.smrl.model.repositories.LinkRepository
-import ru.finnetrolle.smrl.whenever
 import java.util.*
 
 /**
@@ -21,7 +24,7 @@ import java.util.*
 class DefaultKeyMapperServiceTest {
 
     @InjectMocks
-    val service: KeyMapperService = DefaultKeyMapperService()
+    var service: KeyMapperService = DefaultKeyMapperService()
 
     private val KEY: String = "aAbBcCdD"
     private val LINK_A: String = "http://www.google.com"
@@ -55,20 +58,21 @@ class DefaultKeyMapperServiceTest {
         Mockito.`when`(converter.idToKey(ID_B)).thenReturn(KEY_B)
 
         whenever(repo.findOne(Mockito.anyObject())).thenReturn(Optional.empty())
-        whenever(repo.save(Link(LINK_A))).thenReturn(LINK_OBJ_A)
-        whenever(repo.save(Link(LINK_B))).thenReturn(LINK_OBJ_B)
         whenever(repo.findOne(ID_A)).thenReturn(Optional.of(LINK_OBJ_A))
         whenever(repo.findOne(ID_B)).thenReturn(Optional.of(LINK_OBJ_B))
     }
 
     @Test
     fun clientCanAddLinks() {
+        whenever(repo.save(any())).thenReturn(LINK_OBJ_A)
         val keyA = service.add(LINK_A)
         assertEquals(KeyMapperService.Get.Link(LINK_A), service.getLink(keyA))
+
+        whenever(repo.save(any())).thenReturn(LINK_OBJ_B)
         val keyB = service.add(LINK_B)
         assertEquals(KeyMapperService.Get.Link(LINK_B), service.getLink(keyB))
+
         assertNotEquals(keyA, keyB)
-        println()
     }
 
 
